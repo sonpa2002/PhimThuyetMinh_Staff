@@ -1,0 +1,131 @@
+/* Reset & Base */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0e0e0e;
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.container {
+  max-width: 960px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Video player full-width responsive */
+video {
+  /* width: 100%; */
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  margin-bottom: 20px;
+}
+
+/* Movie name */
+.MovieName {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 30px 0 12px;
+  color: #00ffc6;
+  text-shadow: 0 0 5px #00ffc6;
+}
+
+/* Loading text */
+.LoadingMovie {
+  font-size: 1rem;
+  margin: 3px 0 10px;
+  color: deepskyblue;
+  font-style: italic;
+}
+
+/* Episode buttons */
+button[data-src] {
+  background-color: #1e1e1e;
+  border: 1px solid #444;
+  color: #fff;
+  padding: 10px 16px;
+  margin: 6px 4px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  min-width: 100px;
+}
+
+
+button[data-src].FlashActive {
+  background-color: #00ffc6;
+  color: black;
+  font-weight: bold;
+  border: 2px solid #00ffc6;
+}
+.plyr__captions{
+  width: 100% !important;
+  position: absolute !important;
+  bottom: 50% !important;
+}
+.plyr__caption {
+  text-align: center !important;
+  color: rgb(255, 255, 255) !important;
+  font-size: 100% !important;
+  line-height: 100% !important;
+  font-family: "Netflix Sans" !important;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0) !important;
+  text-shadow: rgb(0, 0, 0) 0px 0px 5px, rgb(0, 0, 0) 0px 1px 5px, rgb(0, 0, 0) 0px 2px 5px !important;
+}
+
+/* Responsive */
+@media screen and (min-width: 800px) {
+    button[data-src]:hover {
+  background-color: #00ffc6;
+  color: #000;
+  transform: scale(1.05);
+  box-shadow: 0 0 8px #00ffc6;
+}
+}
+@media (max-width: 768px) {
+    .MovieName {
+  font-size: 1.6rem;
+  margin: 23px 0 10px;
+}
+
+/* Loading text */
+.LoadingMovie {
+  font-size: 1rem;
+  margin: 3.9px 0 9px;
+}
+
+/* Episode buttons */
+button[data-src] {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  min-width: 86px;
+}
+
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 6px;
+  }
+
+  .MovieName {
+  font-size: 1.2rem;
+  margin: 19px 0 8px;
+}
+
+/* Loading text */
+.LoadingMovie {
+  font-size: 0.8rem;
+  margin: 2.5px 0 8px;
+}
+
+/* Episode buttons */
+button[data-src] {
+  padding: 6px 10px;
+  font-size: 0.68rem;
+  min-width: 60px;
+}
+}
