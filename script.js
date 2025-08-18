@@ -6,7 +6,7 @@ let hls;
 let player;
 let TileVideo;
 
-const updateTime = new Date(2025, 7, 18, 12, 35); // Lưu ý: tháng 0-11 => 7 = tháng 8
+const updateTime = new Date(2025, 7, 18, 14, 35); // Lưu ý: tháng 0-11 => 7 = tháng 8
 // Thời gian hiện tại
 const now = new Date();
 // Tính số phút chênh lệch
