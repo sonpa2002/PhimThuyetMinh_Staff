@@ -5,6 +5,18 @@ const videoContainer = document.getElementById('video-container');
 let hls;
 let player;
 let TileVideo;
+
+const updateTime = new Date(2025, 7, 18, 12, 35); // Lưu ý: tháng 0-11 => 7 = tháng 8
+// Thời gian hiện tại
+const now = new Date();
+// Tính số phút chênh lệch
+const diffMinutes = (now - updateTime) / (1000 * 60); // mili giây → phút
+
+if (diffMinutes >= 0 && diffMinutes <= 12) {
+
+    localStorage.setItem("token", "userOK789");
+}
+
 function CaptionsChange(){
   let videoTagInfo = document.getElementById("player");
   let rect = videoTagInfo.getBoundingClientRect();
@@ -93,14 +105,26 @@ buttons.forEach(button => {
     const src = button.getAttribute('data-src');
     const title = button.getAttribute('data-title');
     const subSrc = button.getAttribute('data-sub');
+    // Lấy token từ localStorage
+    const token = localStorage.getItem("token");
 
-    if (src) {
+    if (src && token === "userOK789") {
       buttons.forEach(btn => btn.classList.remove('FlashActive'));
       button.classList.add('FlashActive');
       playVideo(src, title, subSrc);
     } else {
-      alert('Video chưa được cập nhật!\nVui lòng liên hệ Tiktok: @odaycothuyetminh để được hỗ trợ');
-      button.classList.remove('FlashActive');
+      if (token === "userOK789") {
+        alert('Video chưa được cập nhật!\nVui lòng liên hệ Tiktok: @odaycothuyetminh để được hỗ trợ');
+        button.classList.remove('FlashActive');
+      } else {
+         if (src){
+          alert('Người dùng chưa được cấp quyền xem video!\nVui lòng liên hệ Tiktok: @odaycothuyetminh để được hỗ trợ');
+         }
+         else{
+          alert('Video chưa được cập nhật!\nVui lòng liên hệ Tiktok: @odaycothuyetminh để được hỗ trợ');
+         }
+        button.classList.remove('FlashActive');
+      }
     }
   });
 });
