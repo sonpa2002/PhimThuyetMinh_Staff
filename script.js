@@ -6,15 +6,15 @@ let hls;
 let player;
 let TileVideo;
 
-const updateTime = new Date(2025, 7, 18, 14, 35); // Lưu ý: tháng 0-11 => 7 = tháng 8
+const updateTime = new Date(2025, 8, 21, 14, 2); // Lưu ý: tháng 0-11 => 7 = tháng 8
 // Thời gian hiện tại
 const now = new Date();
 // Tính số phút chênh lệch
 const diffMinutes = (now - updateTime) / (1000 * 60); // mili giây → phút
 
-if (diffMinutes >= 0 && diffMinutes <= 12) {
+if (diffMinutes >= 0 && diffMinutes <= 25) {
 
-    localStorage.setItem("token", "userOK789");
+    localStorage.setItem("token", "user123123999");
 }
 
 function CaptionsChange(){
@@ -108,12 +108,12 @@ buttons.forEach(button => {
     // Lấy token từ localStorage
     const token = localStorage.getItem("token");
 
-    if (src && token === "userOK789") {
+    if (src && token === "user123123999") {
       buttons.forEach(btn => btn.classList.remove('FlashActive'));
       button.classList.add('FlashActive');
       playVideo(src, title, subSrc);
     } else {
-      if (token === "userOK789") {
+      if (token === "user123123999") {
         alert('Video chưa được cập nhật!\nVui lòng liên hệ Tiktok: @odaycothuyetminh để được hỗ trợ');
         button.classList.remove('FlashActive');
       } else {
