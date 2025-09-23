@@ -1,20 +1,22 @@
 const titleDisplay = document.getElementById('isLoad');
 const buttons = document.querySelectorAll('button[data-src]');
 const videoContainer = document.getElementById('video-container');
+const autoNextCheckbox = document.getElementById('autoNext');
+const skipCheckbox = document.getElementById('skipIntroOutro');
 
 let hls;
 let player;
 let TileVideo;
 
-const updateTime = new Date(2025, 8, 21, 15, 45); // Lưu ý: tháng 0-11 => 7 = tháng 8
+const updateTime = new Date(2025, 8, 23, 23, 0); // Lưu ý: tháng 0-11 => 7 = tháng 8
 // Thời gian hiện tại
 const now = new Date();
 // Tính số phút chênh lệch
 const diffMinutes = (now - updateTime) / (1000 * 60); // mili giây → phút
 
-if (diffMinutes >= 0 && diffMinutes <= 25) {
+if (diffMinutes >= 0 && diffMinutes <= 2880) {
 
-    localStorage.setItem("token", "user123123999");
+  localStorage.setItem("token", "user123123999");
 }
 
 function CaptionsChange(){
@@ -29,7 +31,7 @@ function CaptionsChange(){
   }
 }
 
-function playVideo(src, title, subSrc) {
+function playVideo(src, title, subSrc, introFirst = 0, introEnd = 0) {
   if (hls) hls.destroy();
   if (player) player.destroy();
 
@@ -90,9 +92,55 @@ function playVideo(src, title, subSrc) {
     }
     CaptionsChange();
     player.play();
-  });
+    
+    // 👉 Skip intro (đầu)
+    playerElement.addEventListener('loadedmetadata', () => {
+      if(localStorage.getItem('skipIntroOutro') === 'true'){
+        if (introFirst > 0 && playerElement.duration > introFirst) {
+          playerElement.currentTime = introFirst;
+        }
+      }
+    });
+    
 
-  titleDisplay.textContent = `Đang phát: Phim ${title}`;
+    // 👉 Skip outro (cuối)
+    player.on('timeupdate', () => {
+      if(localStorage.getItem('skipIntroOutro') === 'true'){
+        const duration = player.duration;
+        if (duration && introEnd > 0 && player.currentTime >= duration - introEnd) {
+          player.pause();
+          playerElement.dispatchEvent(new Event('ended'));
+        }
+      }
+    });
+
+    // Bắt sự kiện hết phim-------------------------
+    playerElement.addEventListener('ended', () => {
+      if(localStorage.getItem('autoNext') === 'true'){
+        const currentTitle = titleDisplay.textContent; 
+        // Regex: lấy tên phim và số tập ở cuối
+        const match = currentTitle.match(/Đang phát:\s*(.+?)\s*-\s*Tập\s+(\d+)$/);
+
+        if (match) {
+          const movieName = match[1].trim();        // "Tên Phim"
+          const currentEpisode = parseInt(match[2], 10);
+          const nextEpisode = currentEpisode + 1;
+
+          // Tìm button của cùng phim và tập kế tiếp
+          const nextButton = Array.from(buttons).find(btn =>
+            btn.getAttribute('data-title') === `${movieName} - Tập ${nextEpisode}`
+          );
+
+          if (nextButton) {
+            nextButton.click();
+          }
+        }
+      }
+    });
+
+
+  });
+  titleDisplay.textContent = `Đang phát: ${title}`;
 }
 window.addEventListener("resize", () => {
   CaptionsChange();
@@ -105,13 +153,15 @@ buttons.forEach(button => {
     const src = button.getAttribute('data-src');
     const title = button.getAttribute('data-title');
     const subSrc = button.getAttribute('data-sub');
+    const introFirst = parseInt(button.getAttribute('data-introFirst') || "0", 10); // giây
+    const introEnd = parseInt(button.getAttribute('data-introEnd') || "0", 10);     // giây
     // Lấy token từ localStorage
     const token = localStorage.getItem("token");
 
     if (src && token === "user123123999") {
       buttons.forEach(btn => btn.classList.remove('FlashActive'));
       button.classList.add('FlashActive');
-      playVideo(src, title, subSrc);
+      playVideo(src, title, subSrc, introFirst, introEnd);
     } else {
       if (token === "user123123999") {
         alert('Video chưa được cập nhật!\nVui lòng liên hệ Tiktok: @odaycothuyetminh để được hỗ trợ');
@@ -129,3 +179,20 @@ buttons.forEach(button => {
   });
 });
 
+// 👉 Khi load trang: khôi phục trạng thái từ localStorage
+window.addEventListener('DOMContentLoaded', () => {
+  const autoNextValue = localStorage.getItem('autoNext') === 'true';
+  const skipValue = localStorage.getItem('skipIntroOutro') === 'true';
+
+  autoNextCheckbox.checked = autoNextValue;
+  skipCheckbox.checked = skipValue;
+});
+
+// 👉 Lắng nghe sự kiện thay đổi và lưu lại
+autoNextCheckbox.addEventListener('change', () => {
+  localStorage.setItem('autoNext', autoNextCheckbox.checked);
+});
+
+skipCheckbox.addEventListener('change', () => {
+  localStorage.setItem('skipIntroOutro', skipCheckbox.checked);
+});
