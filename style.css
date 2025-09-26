@@ -102,7 +102,7 @@ button[data-src].FlashActive {
   position: relative;
   width: 50px;
   height: 26px;
-  background-color: #ccc;
+  background-color: dimgray;
   border-radius: 26px;
   transition: background-color 0.3s;
 }
