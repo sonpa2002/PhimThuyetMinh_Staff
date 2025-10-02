@@ -132,6 +132,70 @@ button[data-src].FlashActive {
   color: khaki;
 }
 
+.history-bar {
+  padding: 16px;
+}
+
+.history-bar h2 {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: #f5f5f5;       /* chữ sáng */
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Container scroll ngang */
+.history-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 16px;
+  padding-bottom: 8px;
+  scroll-snap-type: x mandatory;
+}
+.history-container.center {
+  justify-content: center; /* khi không overflow thì căn giữa */
+}
+.history-container::-webkit-scrollbar {
+  height: 6px;
+}
+.history-container::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+.history-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Item */
+.history-item {
+  min-width: 200px;
+  flex-shrink: 0;
+  padding: 12px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  scroll-snap-align: start;
+  transition: transform 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+
+.history-item:hover {
+  transform: translateY(-4px);
+  border-color: #00e0ff;   /* viền nổi bật khi hover */
+}
+
+.history-item .title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.history-item .time {
+  font-size: 14px;
+  color: #bbb;
+}
 /* Responsive */
 @media screen and (min-width: 800px) {
     button[data-src]:hover {
@@ -176,7 +240,12 @@ button[data-src] {
   .label-text {
     font-size: 13px;
   }
-
+  .history-item {
+    min-width: 160px;
+  }
+  .history-bar h2 {
+    font-size: 16px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -216,6 +285,16 @@ button[data-src] {
     transform: translateX(16px);
   }
   .label-text {
+    font-size: 12px;
+  }
+  .history-item {
+    min-width: 140px;
+    padding: 10px;
+  }
+  .history-item .title {
+    font-size: 14px;
+  }
+  .history-item .time {
     font-size: 12px;
   }
 
