@@ -47,9 +47,38 @@ function updateHistoryLayout() {
     Historycontainer.classList.remove('center'); // overflow → căn trái
   }
 }
-function parseTimeToSeconds(timeStr) {
-  const [mm, ss] = timeStr.split(":").map(Number);
-  return mm * 60 + ss;
+function findEpisodeAndTime(movieName) {
+  // Lấy MostRecentVideo
+  let mostRecent = localStorage.getItem("MostRecentVideo");
+  if (mostRecent) {
+    const parts = mostRecent.split("+").map(p => p.trim());
+    const title = parts[0];
+    const episode = parts[1];
+    const time = parts[2];
+
+    if (title === movieName) {
+      return `${episode}+${time}`;
+    }
+  }
+
+  // Lấy HistoryWatchVideo
+  let history = localStorage.getItem("HistoryWatchVideo");
+  if (history) {
+    const movies = history.split("=");
+    for (let entry of movies) {
+      const parts = entry.split("+").map(p => p.trim());
+      const title = parts[0];
+      const episode = parts[1];
+      const time = parts[2];
+
+      if (title === movieName) {
+        return `${episode}+${time}`;
+      }
+    }
+  }
+
+  // Nếu không tìm thấy
+  return "";
 }
 function cleanHistoryByDom() {
   // Lấy danh sách tên phim hiện có trong DOM
@@ -124,32 +153,45 @@ function renderHistory() {
   items.forEach(item => {
     const div = document.createElement("div");
     div.className = "history-item";
-    div.dataset.movie = `${item.title} - Tập ${item.episode}`;
-    div.dataset.time = item.time;
+    div.dataset.movie = `${item.title}`;
     div.innerHTML = `
       <p class="title">${item.title}</p>
       <p class="time">Tập ${item.episode} - ${item.time}</p>
     `;
 
     div.addEventListener("click", () => {
+    let findEpisodeAndTimeString = findEpisodeAndTime(div.dataset.movie);
+    if (findEpisodeAndTimeString) {
+      const [episode, time] = findEpisodeAndTimeString.split("+");
+      const FindButton = Array.from(buttons).find(
+        btn => btn.getAttribute("data-title") === `${div.dataset.movie} - Tập ${episode}`
+      );
+      if (FindButton) {
+        FindButton.click();
+        introFirstNe = Math.floor(parseFloat(time));
+      }
+      else{
+        Swal.fire({
+          title: 'Có gì đó hông đúng gòi ní ơi',
+          html: 'Tập phim đã bị xóa hoặc không tồn tại!',
+          icon: 'warning',
+          confirmButtonText: 'OK',
+          target: document.fullscreenElement || document.body
+        });
+        location.reload();
+      }
 
-    // ví dụ: tìm nút tương ứng và click
-    const FindButton = Array.from(buttons).find(
-      btn => btn.getAttribute("data-title") === div.dataset.movie
-    );
-    if (FindButton) {
-      FindButton.click();
-      introFirstNe=parseTimeToSeconds(div.dataset.time);
     }
     else{
-      Swal.fire({
-        title: 'Có gì đó hông đúng gòi ní ơi',
-        html: 'Tập phim đã bị xóa hoặc không tồn tại!',
-        icon: 'warning',
-        confirmButtonText: 'OK'
-      });
-      location.reload();
-    }
+        Swal.fire({
+          title: 'Có gì đó hông đúng gòi ní ơi',
+          html: 'Tập phim đã bị xóa hoặc không tồn tại!',
+          icon: 'warning',
+          confirmButtonText: 'OK',
+          target: document.fullscreenElement || document.body
+        });
+        location.reload();
+      }
     });
     container.appendChild(div);
   });
@@ -260,6 +302,7 @@ function formatTime(seconds) {
 }
 
 function playVideo(src, title, subSrc, introFirst = 0, introEnd = 0) {
+  renderHistory();
   introFirstNe=introFirst;introEndNe=introEnd;lastSaveTime=0;
   if (hls) hls.destroy();
   
@@ -391,50 +434,11 @@ function playVideo(src, title, subSrc, introFirst = 0, introEnd = 0) {
 
     playerElement.removeEventListener("ended", onVideoEnded);
     playerElement.addEventListener("ended", onVideoEnded);
-    // 👉 Skip intro (đầu)
-    // playerElement.addEventListener('loadedmetadata', () => {
-    //   if(localStorage.getItem('skipIntroOutro') === 'true'){
-    //     if (introFirst > 0 && playerElement.duration > introFirst) {
-    //       playerElement.currentTime = introFirst;
-    //     }
-    //   }
-    // });
-    
 
-    // // 👉 Skip outro (cuối)
-    // player.on('timeupdate', () => {
-    //   if(localStorage.getItem('skipIntroOutro') === 'true'){
-    //     const duration = player.duration;
-    //     if (duration && introEnd > 0 && player.currentTime >= duration - introEnd) {
-    //       player.pause();
-    //       playerElement.dispatchEvent(new Event('ended'));
-    //     }
-    //   }
-    // });
 
-    // // Bắt sự kiện hết phim-------------------------
-    // playerElement.addEventListener('ended', () => {
-    //   if(localStorage.getItem('autoNext') === 'true'){
-    //     const currentTitle = titleDisplay.textContent; 
-    //     // Regex: lấy tên phim và số tập ở cuối
-    //     const match = currentTitle.match(/Đang phát:\s*(.+?)\s*-\s*Tập\s+(\d+)$/);
-
-    //     if (match) {
-    //       const movieName = match[1].trim();        // "Tên Phim"
-    //       const currentEpisode = parseInt(match[2], 10);
-    //       const nextEpisode = currentEpisode + 1;
-
-    //       // Tìm button của cùng phim và tập kế tiếp
-    //       const nextButton = Array.from(buttons).find(btn =>
-    //         btn.getAttribute('data-title') === `${movieName} - Tập ${nextEpisode}`
-    //       );
-
-    //       if (nextButton) {
-    //         nextButton.click();
-    //       }
-    //     }
-    //   }
-    // });
+    playerElement.addEventListener("pause", () => {
+      renderHistory();
+    });
 
 
   });
@@ -472,7 +476,8 @@ buttons.forEach(button => {
           title: 'Video chưa được cập nhật!',
           html: 'Vui lòng liên hệ Tiktok: @odaycothuyetminh <br> để được hỗ trợ',
           icon: 'info',
-          confirmButtonText: 'OK'
+          confirmButtonText: 'OK',
+          target: document.fullscreenElement || document.body
         });
         button.classList.remove('FlashActive');
       } else {
@@ -481,7 +486,8 @@ buttons.forEach(button => {
               title: 'Người dùng chưa được cấp quyền xem Video!',
               html: 'Vui lòng liên hệ Tiktok: @odaycothuyetminh <br> để được hỗ trợ',
               icon: 'error',
-              confirmButtonText: 'OK'
+              confirmButtonText: 'OK',
+              target: document.fullscreenElement || document.body
             });
          }
          else{
@@ -489,7 +495,8 @@ buttons.forEach(button => {
               title: 'Video chưa được cập nhật!',
               html: 'Vui lòng liên hệ Tiktok: @odaycothuyetminh <br> để được hỗ trợ',
               icon: 'info',
-              confirmButtonText: 'OK'
+              confirmButtonText: 'OK',
+              target: document.fullscreenElement || document.body
             });
          }
         button.classList.remove('FlashActive');
