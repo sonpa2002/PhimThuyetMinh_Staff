@@ -15,7 +15,7 @@ let MovieNameMostRecent="";
 let EpisodeMostRecent="";
 let lastSaveTime = 0;
 
-const updateTime = new Date(2025, 9, 4, 15, 28); // Lưu ý: tháng 0-11 => 7 = tháng 8
+const updateTime = new Date(2025, 9, 4, 16, 8); // Lưu ý: tháng 0-11 => 7 = tháng 8
 // Thời gian hiện tại
 const now = new Date();
 // Tính số phút chênh lệch
@@ -25,25 +25,45 @@ if (diffMinutes >= 0 && diffMinutes <= 5) {
   localStorage.setItem("tokenStaff", "user101+01-20");
 }
 function canUserWatch(storedStr, title) {
-  
-  const [storedUser, range] = storedStr.split("+");
-  const [startEp, endEp] = range.split("-").map(n => parseInt(n, 10));
+  // 1. Kiểm tra storedStr hợp lệ
+  if (typeof storedStr !== "string" || !storedStr.includes("+") || !storedStr.includes("-")) {
+    return false;
+  }
 
+  // 2. Tách user và range
+  const parts = storedStr.split("+");
+  if (parts.length < 2) return false;
+
+  const storedUser = parts[0];
+  const range = parts[1];
+
+  // 3. Tách start-end
+  const rangeParts = range.split("-");
+  if (rangeParts.length < 2) return false;
+
+  const startEp = parseInt(rangeParts[0], 10);
+  const endEp = parseInt(rangeParts[1], 10);
+  if (isNaN(startEp) || isNaN(endEp)) return false;
+
+  // 4. Kiểm tra user có trong danh sách cho phép
   const allowedList = ["user101", "user102", "user103"];
-
-  
   if (!allowedList.includes(storedUser)) {
     return false;
   }
 
-  
+  // 5. Kiểm tra tiêu đề (title)
+  if (typeof title !== "string") return false;
+
   const match = title.match(/Tập\s+(\d+)$/);
   if (!match) return false;
-  const episode = parseInt(match[1], 10);
 
-  
+  const episode = parseInt(match[1], 10);
+  if (isNaN(episode)) return false;
+
+  // 6. Trả về kết quả kiểm tra tập
   return episode >= startEp && episode <= endEp;
 }
+
 
 
 function CaptionsChange(){
