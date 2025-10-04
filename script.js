@@ -15,15 +15,36 @@ let MovieNameMostRecent="";
 let EpisodeMostRecent="";
 let lastSaveTime = 0;
 
-const updateTime = new Date(2025, 8, 26, 15, 30); // Lưu ý: tháng 0-11 => 7 = tháng 8
+const updateTime = new Date(2025, 9, 4, 15, 28); // Lưu ý: tháng 0-11 => 7 = tháng 8
 // Thời gian hiện tại
 const now = new Date();
 // Tính số phút chênh lệch
 const diffMinutes = (now - updateTime) / (1000 * 60); // mili giây → phút
 
 if (diffMinutes >= 0 && diffMinutes <= 5) {
-  localStorage.setItem("tokenBoss", "user999Boss");
+  localStorage.setItem("tokenStaff", "user101+01-20");
 }
+function canUserWatch(storedStr, title) {
+  
+  const [storedUser, range] = storedStr.split("+");
+  const [startEp, endEp] = range.split("-").map(n => parseInt(n, 10));
+
+  const allowedList = ["user101", "user102", "user103"];
+
+  
+  if (!allowedList.includes(storedUser)) {
+    return false;
+  }
+
+  
+  const match = title.match(/Tập\s+(\d+)$/);
+  if (!match) return false;
+  const episode = parseInt(match[1], 10);
+
+  
+  return episode >= startEp && episode <= endEp;
+}
+
 
 function CaptionsChange(){
   let videoTagInfo = document.getElementById("player");
@@ -463,15 +484,15 @@ buttons.forEach(button => {
     const subSrc = button.getAttribute('data-sub');
     const introFirst = parseInt(button.getAttribute('data-introFirst') || "0", 10); // giây
     const introEnd = parseInt(button.getAttribute('data-introEnd') || "0", 10);     // giây
-    // Lấy tokenBoss từ localStorage
-    const tokenBoss = localStorage.getItem("tokenBoss");
+    
+    const tokenStaff = localStorage.getItem("tokenStaff");
 
-    if (src && tokenBoss === "user999Boss") {
+    if (src && canUserWatch(tokenStaff, title)==true) {
       buttons.forEach(btn => btn.classList.remove('FlashActive'));
       button.classList.add('FlashActive');
       playVideo(src, title, subSrc, introFirst, introEnd);
     } else {
-      if (tokenBoss === "user999Boss") {
+      if (canUserWatch(tokenStaff, title)==true) {
         Swal.fire({
           title: 'Video chưa được cập nhật!',
           html: 'Vui lòng liên hệ Tiktok: @odaycothuyetminh <br> để được hỗ trợ',
