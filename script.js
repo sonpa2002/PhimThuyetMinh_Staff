@@ -15,7 +15,7 @@ let MovieNameMostRecent="";
 let EpisodeMostRecent="";
 let lastSaveTime = 0;
 
-const updateTime = new Date(2025, 9, 6, 15, 2); // Lưu ý: tháng 0-11 => 7 = tháng 8
+const updateTime = new Date(2025, 9, 6, 15, 30); // Lưu ý: tháng 0-11 => 7 = tháng 8
 // Thời gian hiện tại
 const now = new Date();
 // Tính số phút chênh lệch
