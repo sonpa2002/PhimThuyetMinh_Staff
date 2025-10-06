@@ -15,13 +15,13 @@ let MovieNameMostRecent="";
 let EpisodeMostRecent="";
 let lastSaveTime = 0;
 
-const updateTime = new Date(2025, 9, 7, 0, 6); // Lưu ý: tháng 0-11 => 7 = tháng 8
+const updateTime = new Date(2025, 9, 7, 0, 8); // Lưu ý: tháng 0-11 => 7 = tháng 8
 
 const now = new Date();
 const diffMinutes = (now - updateTime) / (1000 * 60); // mili giây → phút
 
 if (diffMinutes >= 0 && diffMinutes <= 6) {
-  localStorage.setItem("tokenStaff", "user101+14-18");
+  localStorage.setItem("tokenStaff", "user101+01-18");
 }
 function canUserWatch(storedStr, title) {
   // 1. Kiểm tra storedStr hợp lệ
