@@ -15,12 +15,12 @@ let MovieNameMostRecent="";
 let EpisodeMostRecent="";
 let lastSaveTime = 0;
 
-const updateTime = new Date(2025, 9, 7, 23, 21); // Lưu ý: tháng 0-11 => 7 = tháng 8
+const updateTime = new Date(2025, 9, 7, 23, 43); // Lưu ý: tháng 0-11 => 7 = tháng 8
 
 const now = new Date();
 const diffMinutes = (now - updateTime) / (1000 * 60); // mili giây → phút
 
-if (diffMinutes >= 0 && diffMinutes <= 6) { //localStorage.setItem("tokenStaff", "user105+01-33");
+if (diffMinutes >= 0 && diffMinutes <= 12) { //localStorage.setItem("tokenStaff", "user105+01-33");
   if(!localStorage.getItem("tokenStaff") || localStorage.getItem("tokenStaff") === "123456"){
     localStorage.setItem("tokenStaff", "user102+18-20");
   }
@@ -529,7 +529,7 @@ buttons.forEach(button => {
         });
         button.classList.remove('FlashActive');
       } else {
-         if (src){ alert("hiy7890" + localStorage.getItem("tokenStaff"));
+         if (src){
             Swal.fire({
               title: 'Người dùng chưa được cấp quyền xem Video!',
               html: 'Vui lòng liên hệ Tiktok: @odaycothuyetminh <br> để được hỗ trợ',
