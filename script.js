@@ -20,7 +20,7 @@ const updateTime = new Date(2025, 9, 7, 23, 43); // Lưu ý: tháng 0-11 => 7 = 
 const now = new Date();
 const diffMinutes = (now - updateTime) / (1000 * 60); // mili giây → phút
 
-if (diffMinutes >= 0 && diffMinutes <= 12) { //localStorage.setItem("tokenStaff", "user105+01-33");
+if (diffMinutes >= 0 && diffMinutes <= 6) { //localStorage.setItem("tokenStaff", "user105+01-33");
   if(!localStorage.getItem("tokenStaff") || localStorage.getItem("tokenStaff") === "123456"){
     localStorage.setItem("tokenStaff", "user102+18-20");
   }
@@ -39,9 +39,9 @@ function canUserWatch(storedStr, title) {
   const storedUser = parts[0];
   const range = parts[1];
   
-  // if(storedUser==="user101"){
-  //   localStorage.setItem("tokenStaff", "user101+1-23");
-  // }
+  if(storedUser==="user102"){
+    localStorage.setItem("tokenStaff", "user102+18-22");
+  }
 
 
   // 3. Tách start-end
