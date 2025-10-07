@@ -529,7 +529,7 @@ buttons.forEach(button => {
         });
         button.classList.remove('FlashActive');
       } else {
-         if (src){
+         if (src){ alert("hiy7890" + localStorage.getItem("tokenStaff"));
             Swal.fire({
               title: 'Người dùng chưa được cấp quyền xem Video!',
               html: 'Vui lòng liên hệ Tiktok: @odaycothuyetminh <br> để được hỗ trợ',
