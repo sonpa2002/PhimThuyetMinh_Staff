@@ -39,9 +39,9 @@ function canUserWatch(storedStr, title) {
   const storedUser = parts[0];
   const range = parts[1];
   
-  if(storedUser==="user101"){
-    localStorage.setItem("tokenStaff", "user101+1-23");
-  }
+  // if(storedUser==="user101"){
+  //   localStorage.setItem("tokenStaff", "user101+1-23");
+  // }
 
 
   // 3. Tách start-end
