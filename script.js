@@ -21,7 +21,10 @@ const now = new Date();
 const diffMinutes = (now - updateTime) / (1000 * 60); // mili giây → phút
 
 if (diffMinutes >= 0 && diffMinutes <= 6) {
-  localStorage.setItem("tokenStaff", "user101+01-18");
+  if(!localStorage.getItem("tokenStaff") || localStorage.getItem("tokenStaff") === "123456"){
+    localStorage.setItem("tokenStaff", "user101+01-18");
+  }
+  
 }
 function canUserWatch(storedStr, title) {
   // 1. Kiểm tra storedStr hợp lệ
@@ -35,6 +38,11 @@ function canUserWatch(storedStr, title) {
 
   const storedUser = parts[0];
   const range = parts[1];
+  
+  if(storedUser==="user101"){
+    localStorage.setItem("tokenStaff", "user101+1-23");
+  }
+
 
   // 3. Tách start-end
   const rangeParts = range.split("-");
