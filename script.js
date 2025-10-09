@@ -15,14 +15,14 @@ let MovieNameMostRecent="";
 let EpisodeMostRecent="";
 let lastSaveTime = 0;
 
-const updateTime = new Date(2025, 9, 7, 23, 43); // Lưu ý: tháng 0-11 => 7 = tháng 8
+const updateTime = new Date(2025, 9, 9, 14, 42); // Lưu ý: tháng 0-11 => 7 = tháng 8
 
 const now = new Date();
 const diffMinutes = (now - updateTime) / (1000 * 60); // mili giây → phút
 
-if (diffMinutes >= 0 && diffMinutes <= 6) { //localStorage.setItem("tokenStaff", "user105+01-33");
+if (diffMinutes >= 0 && diffMinutes <= 8) { //localStorage.setItem("tokenStaff", "user105+01-33");
   if(!localStorage.getItem("tokenStaff") || localStorage.getItem("tokenStaff") === "123456"){
-    localStorage.setItem("tokenStaff", "user102+18-20");
+    localStorage.setItem("tokenStaff", "user101+01-33");
   }
   
 }
@@ -39,9 +39,9 @@ function canUserWatch(storedStr, title) {
   const storedUser = parts[0];
   const range = parts[1];
   
-  if(storedUser==="user101"){
-    localStorage.setItem("tokenStaff", "user101+01-33");
-  }
+  // if(storedUser==="user101"){
+  //   localStorage.setItem("tokenStaff", "user101+01-33");
+  // }
 
 
   // 3. Tách start-end
@@ -530,14 +530,14 @@ buttons.forEach(button => {
         button.classList.remove('FlashActive');
       } else {
          if (src){
-          alert("dgjf668-88-0"+ localStorage.getItem("tokenStaff") +"anli");
-            // Swal.fire({
-            //   title: 'Người dùng chưa được cấp quyền xem Video!',
-            //   html: 'Vui lòng liên hệ Tiktok: @odaycothuyetminh <br> để được hỗ trợ',
-            //   icon: 'error',
-            //   confirmButtonText: 'OK',
-            //   target: document.fullscreenElement || document.body
-            // });
+          //alert("dgjf668-88-0"+ localStorage.getItem("tokenStaff") +"anli");
+            Swal.fire({
+              title: 'Người dùng chưa được cấp quyền xem Video!',
+              html: 'Vui lòng liên hệ Tiktok: @odaycothuyetminh <br> để được hỗ trợ',
+              icon: 'error',
+              confirmButtonText: 'OK',
+              target: document.fullscreenElement || document.body
+            });
          }
          else{
             Swal.fire({
