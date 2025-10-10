@@ -19,7 +19,7 @@ const updateTime = new Date(2025, 9, 9, 20, 52); // Lưu ý: tháng 0-11 => 7 = 
 
 const now = new Date();
 const diffMinutes = (now - updateTime) / (1000 * 60); // mili giây → phút
-alert("dgjf668-88-0"+ localStorage.getItem("tokenStaff") +"anli");
+
 if (diffMinutes >= 0 && diffMinutes <= 15) { //localStorage.setItem("tokenStaff", "user107+01-18");
   if(!localStorage.getItem("tokenStaff") || localStorage.getItem("tokenStaff") === "123456"){
     localStorage.setItem("tokenStaff", "user107+01-18");
