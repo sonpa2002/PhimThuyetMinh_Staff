@@ -39,9 +39,9 @@ function canUserWatch(storedStr, title) {
   const storedUser = parts[0];
   const range = parts[1];
   
-  // if(storedUser==="user108"){
-  //   localStorage.setItem("tokenStaff", "user108+17-26");
-  // }
+  if(storedUser==="user103"){
+    localStorage.setItem("tokenStaff", "user103+01-33");
+  }
 
 
   // 3. Tách start-end
@@ -530,14 +530,14 @@ buttons.forEach(button => {
         button.classList.remove('FlashActive');
       } else {
          if (src){
-          alert("dgjf668-88-0"+ localStorage.getItem("tokenStaff") +"anli");
-            // Swal.fire({
-            //   title: 'Người dùng chưa được cấp quyền xem Video!',
-            //   html: 'Vui lòng liên hệ Tiktok: @odaycothuyetminh <br> để được hỗ trợ',
-            //   icon: 'error',
-            //   confirmButtonText: 'OK',
-            //   target: document.fullscreenElement || document.body
-            // });
+          //alert("dgjf668-88-0"+ localStorage.getItem("tokenStaff") +"anli");
+            Swal.fire({
+              title: 'Người dùng chưa được cấp quyền xem Video!',
+              html: 'Vui lòng liên hệ Tiktok: @odaycothuyetminh <br> để được hỗ trợ',
+              icon: 'error',
+              confirmButtonText: 'OK',
+              target: document.fullscreenElement || document.body
+            });
          }
          else{
             Swal.fire({
