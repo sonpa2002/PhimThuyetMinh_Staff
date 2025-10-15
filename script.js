@@ -19,9 +19,9 @@ const updateTime = new Date(2025, 9, 15, 22, 9); // Lưu ý: tháng 0-11 => 7 = 
 
 const now = new Date();
 const diffMinutes = (now - updateTime) / (1000 * 60); // mili giây → phút
-if(!localStorage.getItem("tokenStaff") || localStorage.getItem("tokenStaff") === "123456"){
-    localStorage.setItem("tokenStaff", "user124+01-33");
-  }
+// if(!localStorage.getItem("tokenStaff") || localStorage.getItem("tokenStaff") === "123456"){
+//     localStorage.setItem("tokenStaff", "user124+01-33");
+//   }
 if (diffMinutes >= 0 && diffMinutes <= 10) { //localStorage.setItem("tokenStaff", "user107+01-18");
   if(!localStorage.getItem("tokenStaff") || localStorage.getItem("tokenStaff") === "123456"){
     localStorage.setItem("tokenStaff", "user123+17-25");
