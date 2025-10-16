@@ -19,9 +19,9 @@ const updateTime = new Date(2025, 9, 15, 22, 9); // Lưu ý: tháng 0-11 => 7 = 
 
 const now = new Date();
 const diffMinutes = (now - updateTime) / (1000 * 60); // mili giây → phút
-// if(!localStorage.getItem("tokenStaff") || localStorage.getItem("tokenStaff") === "123456"){
-//     localStorage.setItem("tokenStaff", "user124+01-33");
-//   }
+if(!localStorage.getItem("tokenStaff") || localStorage.getItem("tokenStaff") === "123456"){
+    localStorage.setItem("tokenStaff", "user125+01-24");
+  }
 if (diffMinutes >= 0 && diffMinutes <= 10) { //localStorage.setItem("tokenStaff", "user107+01-18");
   if(!localStorage.getItem("tokenStaff") || localStorage.getItem("tokenStaff") === "123456"){
     localStorage.setItem("tokenStaff", "user123+17-25");
@@ -55,7 +55,7 @@ function canUserWatch(storedStr, title) {
   if (isNaN(startEp) || isNaN(endEp)) return false;
 
   // 4. Kiểm tra user có trong danh sách cho phép
-  const allowedList = ["user101", "user102", "user103","user999","user104","user105","user106","user107","user108","user109","user110","user111","user112","user113","user114","user115","user116","user117","user118","user119","user120","user121","user122","user124"];
+  const allowedList = ["user101", "user102", "user103","user999","user104","user105","user106","user107","user108","user109","user110","user111","user112","user113","user114","user115","user116","user117","user118","user119","user120","user121","user122","user124","user125"];
   if (!allowedList.includes(storedUser)) {
     return false;
   }
