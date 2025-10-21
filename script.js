@@ -16,9 +16,7 @@ let EpisodeMostRecent="";
 let lastSaveTime = 0;
 
 const updateTime = new Date(2025, 9, 15, 22, 9); // Lưu ý: tháng 0-11 => 7 = tháng 8
-if(!localStorage.getItem("tokenStaff") || localStorage.getItem("tokenStaff") === "123456"){
-    localStorage.setItem("tokenStaff", "user126+28-32");
-  }
+
 const now = new Date();
 const diffMinutes = (now - updateTime) / (1000 * 60); // mili giây → phút
 
