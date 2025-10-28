@@ -53,7 +53,7 @@ function canUserWatch(storedStr, title) {
   if (isNaN(startEp) || isNaN(endEp)) return false;
 
   // 4. Kiểm tra user có trong danh sách cho phép
-  const allowedList = ["user999", "user888", "user126"];
+  const allowedList = ["user999", "user888", "user126", "user124"];
   if (!allowedList.includes(storedUser)) {
     return false;
   }
