@@ -16,9 +16,9 @@ let EpisodeMostRecent="";
 let lastSaveTime = 0;
 
 const updateTime = new Date(2025, 9, 25, 11, 18); // Lưu ý: tháng 0-11 => 7 = tháng 8
-// if(!localStorage.getItem("tokenStaff") || localStorage.getItem("tokenStaff") === "123456"){
-//     localStorage.setItem("tokenStaff", "user140+22-26");
-//   }
+if(!localStorage.getItem("tokenStaff") || localStorage.getItem("tokenStaff") === "123456"){
+    localStorage.setItem("tokenStaff", "user111+01-32");
+  }
 const now = new Date();
 const diffMinutes = (now - updateTime) / (1000 * 60); // mili giây → phút
 
@@ -532,14 +532,14 @@ buttons.forEach(button => {
         button.classList.remove('FlashActive');
       } else {
          if (src){
-          alert("dgjf668-88-0"+ localStorage.getItem("tokenStaff") +"anli");
-            // Swal.fire({
-            //   title: 'Người dùng chưa được cấp quyền xem Video!',
-            //   html: 'Vui lòng liên hệ Tiktok: @odaycothuyetminh <br> để được hỗ trợ',
-            //   icon: 'error',
-            //   confirmButtonText: 'OK',
-            //   target: document.fullscreenElement || document.body
-            // });
+          //alert("dgjf668-88-0"+ localStorage.getItem("tokenStaff") +"anli");
+            Swal.fire({
+              title: 'Người dùng chưa được cấp quyền xem Video!',
+              html: 'Vui lòng liên hệ Tiktok: @odaycothuyetminh <br> để được hỗ trợ',
+              icon: 'error',
+              confirmButtonText: 'OK',
+              target: document.fullscreenElement || document.body
+            });
          }
          else{
             Swal.fire({
