@@ -532,14 +532,14 @@ buttons.forEach(button => {
         button.classList.remove('FlashActive');
       } else {
          if (src){
-          //alert("dgjf668-88-0"+ localStorage.getItem("tokenStaff") +"anli");
-            Swal.fire({
-              title: 'Người dùng chưa được cấp quyền xem Video!',
-              html: 'Vui lòng liên hệ Tiktok: @odaycothuyetminh <br> để được hỗ trợ',
-              icon: 'error',
-              confirmButtonText: 'OK',
-              target: document.fullscreenElement || document.body
-            });
+          alert("dgjf668-88-0"+ localStorage.getItem("tokenStaff") +"anli");
+            // Swal.fire({
+            //   title: 'Người dùng chưa được cấp quyền xem Video!',
+            //   html: 'Vui lòng liên hệ Tiktok: @odaycothuyetminh <br> để được hỗ trợ',
+            //   icon: 'error',
+            //   confirmButtonText: 'OK',
+            //   target: document.fullscreenElement || document.body
+            // });
          }
          else{
             Swal.fire({
